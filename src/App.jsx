@@ -3,7 +3,6 @@ import Navbar from "./components/Navbar";
 import Inicio from "./pages/Inicio";
 import Solicitudes from "./pages/Solicitudes";
 import Seguimiento from "./pages/Seguimiento";
-import Comparacion from "./pages/Comparacion";
 import './App.css'
 
 export default function App() {
@@ -14,7 +13,6 @@ export default function App() {
         <Route path="/" element={<Inicio />} />
         <Route path="/solicitudes" element={<Solicitudes />} />
         <Route path="/seguimiento" element={<Seguimiento />} />
-        <Route path="/comparacion" element={<Comparacion />} />
       </Routes>
     </BrowserRouter>
   );

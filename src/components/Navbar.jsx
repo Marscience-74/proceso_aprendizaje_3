@@ -9,7 +9,6 @@ export default function Navbar() {
         <li><Link to="/" style={{ color: "white", textDecoration: "none" }}>Inicio</Link></li>
         <li><Link to="/solicitudes" style={{ color: "white", textDecoration: "none" }}>Solicitudes</Link></li>
         <li><ContadorSeguimiento /></li>
-        <li><Link to="/comparacion" style={{ color: "white", textDecoration: "none" }}>Comparación</Link></li>
       </ul>
     </nav>
   );
