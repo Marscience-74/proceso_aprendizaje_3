@@ -5,7 +5,7 @@
 > **Evaluación:** PA3 — Proceso de Aprendizaje 3  
 > **Periodo / corte:** 202620 · Sesión 10
 > **Equipo:** Grupo 7  
-> **Docente / Sección:** {pendiente}
+
 
 ## 1. Integrantes
 
