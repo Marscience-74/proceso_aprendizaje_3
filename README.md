@@ -147,7 +147,6 @@ Todos los integrantes deben participar en la exposición con sus cámaras prendi
 - **React Router:** permite cambiar de vista sin recargar la página, como en una SPA. *(Sesión 9)*
 - **Redux:** una acción cambia el estado en un solo lugar (el store) y toda la pantalla se actualiza. Lo usamos para el seguimiento de solicitudes. *(Sesión 10)*
 - **Context API vs Redux:** Context es más simple; Redux da más orden y trazabilidad, pero pide más código. Para algo pequeño basta con Context. *(Sesión 10)* {pendiente: confirmar con el Context implementado}
-- **Conclusión grupal:** {pendiente: se redacta al cierre}
 
 ---
 
