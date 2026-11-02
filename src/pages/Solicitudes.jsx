@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { solicitudesIniciales } from "../data/mockData";
+import BotonSeguimiento from "../components/BotonSeguimiento";
 
 export default function Solicitudes() {
   // La lista de solicitudes debe venir del estado global (Context API).
@@ -31,6 +32,7 @@ export default function Solicitudes() {
               <th>Tipo de Trámite</th>
               <th>Estado</th>
               <th>Fecha</th>
+              <th>Seguimiento</th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +42,8 @@ export default function Solicitudes() {
                 <td>{sol.tipo}</td>
                 <td><strong>{sol.estado}</strong></td>
                 <td>{sol.fecha}</td>
+                {/* Temporal: el botón pasará a la página de Detalle cuando exista. */}
+                <td><BotonSeguimiento solicitudId={sol.id} /></td>
               </tr>
             ))}
           </tbody>
