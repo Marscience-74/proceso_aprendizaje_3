@@ -22,12 +22,12 @@ export default function Solicitudes() {
 
   return (
     <main style={{ padding: "2rem" }}>
-      <h2>Mis Solicitudes</h2>
+      <h2>Solicitudes</h2>
       
       {cargando ? (
         <p>Cargando información...</p>
       ) : (
-        <table border="1" cellPadding="10" style={{ borderCollapse: "collapse", width: "100%", marginTop: "1rem" }}>
+        <table  cellPadding="10" style={{ borderCollapse: "collapse", width: "100%", marginTop: "1rem" }}>
           <thead>
             <tr style={{ backgroundColor: "#f2f2f2" }}>
               <th>ID</th>
