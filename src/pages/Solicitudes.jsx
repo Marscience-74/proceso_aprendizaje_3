@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { solicitudesIniciales } from "../data/mockData";
+import { useState, useEffect, useContext } from "react";
 import BotonSeguimiento from "../components/BotonSeguimiento";
+import { SolicitudesContext } from "../context/SolicitudesContext";
 
 export default function Solicitudes() {
   // La lista de solicitudes debe venir del estado global (Context API).
   // TODO (Context): cuando exista SolicitudesContexto, reemplazar la línea siguiente por:
   //   const { solicitudes } = useContext(SolicitudesContexto);
-  const solicitudes = solicitudesIniciales;
+  const { solicitudes } = useContext(SolicitudesContext);
 
   const [cargando, setCargando] = useState(true);
 
