@@ -124,7 +124,7 @@ La aplicación queda disponible en la dirección que muestra la terminal (por de
 
 ## 5. Video de exposición
 
-**Video público de YouTube:** [PEGAR AQUÍ EL ENLACE]
+**Video público de YouTube:** [[Click al video]](https://youtu.be/-N7cjoncdGs)
 
 Todos los integrantes deben participar en la exposición con sus cámaras prendidas y explicar el problema, el procedimiento, la solución desarrollada, las decisiones tomadas y su justificación, relacionándolas con los contenidos de las sesiones 9 y 10.
 
