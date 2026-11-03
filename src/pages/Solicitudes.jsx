@@ -1,12 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import BotonSeguimiento from "../components/BotonSeguimiento";
 import { SolicitudesContext } from "../context/SolicitudesContext";
+import { ESTADOS } from "../data/mockData";
 
 export default function Solicitudes() {
-  // La lista de solicitudes debe venir del estado global (Context API).
-  // TODO (Context): cuando exista SolicitudesContexto, reemplazar la línea siguiente por:
-  //   const { solicitudes } = useContext(SolicitudesContexto);
-  const { solicitudes } = useContext(SolicitudesContext);
+  // La lista y la función para cambiar el estado vienen del estado global (Context API).
+  const { solicitudes, cambiarEstado } = useContext(SolicitudesContext);
 
   const [cargando, setCargando] = useState(true);
 
@@ -32,6 +31,7 @@ export default function Solicitudes() {
               <th>Tipo de Trámite</th>
               <th>Estado</th>
               <th>Fecha</th>
+              <th>Cambiar estado</th>
               <th>Seguimiento</th>
             </tr>
           </thead>
@@ -42,6 +42,17 @@ export default function Solicitudes() {
                 <td>{sol.tipo}</td>
                 <td><strong>{sol.estado}</strong></td>
                 <td>{sol.fecha}</td>
+                <td>
+                  <select
+                    aria-label={`Cambiar estado de la solicitud ${sol.id}`}
+                    value={sol.estado}
+                    onChange={(e) => cambiarEstado(sol.id, e.target.value)}
+                  >
+                    {ESTADOS.map((estado) => (
+                      <option key={estado}>{estado}</option>
+                    ))}
+                  </select>
+                </td>
                 {/* Temporal: el botón pasará a la página de Detalle cuando exista. */}
                 <td><BotonSeguimiento solicitudId={sol.id} /></td>
               </tr>

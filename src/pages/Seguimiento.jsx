@@ -1,12 +1,11 @@
+import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { solicitudesIniciales } from "../data/mockData";
+import { SolicitudesContext } from "../context/SolicitudesContext";
 import BotonSeguimiento from "../components/BotonSeguimiento";
 
 export default function Seguimiento() {
-  // Las solicitudes deben venir del estado global (Context API).
-  // TODO (Context): cuando exista SolicitudesContexto, reemplazar la línea siguiente por:
-  //   const { solicitudes } = useContext(SolicitudesContexto);
-  const solicitudes = solicitudesIniciales;
+  // Las solicitudes vienen del estado global (Context API).
+  const { solicitudes } = useContext(SolicitudesContext);
 
   // Los ids de las solicitudes seguidas vienen de Redux.
   const seguidas = useSelector((state) => state.seguidas);

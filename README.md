@@ -12,8 +12,8 @@
 | Integrante | Rol | Aporte principal |
 |---|---|---|
 | Leonardo Alonso Guillén Zúñiga | Actividades 1 y 2 — Interfaz, componentes, Hooks y React Router | Proyecto base con Vite y React, navegación con React Router, barra de navegación, página de solicitudes con `useState` y `useEffect`, y datos locales de prueba |
+| Flavio César García Flores | Actividad 3 — Estado global con Context API | Contexto y provider de solicitudes (`SolicitudesContext`, `SolicitudesProvider`) con consumidores en las páginas de Solicitudes y Seguimiento |
 | Mariano Guerrero Barrueto | Actividad 4 — Redux y comparación técnica | Reducer, store y `Provider` de Redux, botón y contador de seguimiento, página de Seguimiento y comparación Context API vs Redux |
-| {pendiente: tercer integrante} | {pendiente} | {pendiente} |
 
 ## 2. Descripción y objetivo
 
@@ -32,8 +32,8 @@ En esta etapa se trabaja con **datos locales y simulados**. No se consume ningun
 - Barra de navegación (`Navbar`) con enlaces a las vistas.
 - **Datos locales** en `src/data/mockData.js`: `ESTADOS`, `TIPOS` y `solicitudesIniciales` (6 solicitudes con `id`, `tipo`, `descripcion`, `estado` y `fecha`).
 - Página **Solicitudes**: `useState` para el indicador de carga y `useEffect` con `[]` que simula una carga de 0,8 s y limpia el temporizador al desmontar; muestra la lista en una tabla.
-- Rutas, componentes (funcionales y de clase), filtros, formulario y detalle de solicitud: {pendiente}
-- Estado global con **Context API** (providers y consumers): {pendiente}
+- Componentes funcionales (`Navbar`, `BotonSeguimiento`, `ContadorSeguimiento`) y páginas (`Inicio`, `Solicitudes`, `Seguimiento`), organizados en `src/components` y `src/pages`.
+- Estado global con **Context API**: `SolicitudesContext` y `SolicitudesProvider` (`src/context/`) guardan las solicitudes y ofrecen `cambiarEstado` y `agregarSolicitud`. Las páginas Solicitudes (cambia el estado con un selector) y Seguimiento las consumen con `useContext`, de modo que un cambio en una vista se ve en la otra.
 - Introducción básica a **Redux** (estilo clásico, como en la sesión 10): `seguimientoReducer` (acciones `SEGUIR` y `DEJAR_DE_SEGUIR`), `store` con `createStore`, `Provider` de react-redux, `useSelector` y `useDispatch`. Gestiona el **seguimiento de solicitudes**: botón "Seguir / Dejar de seguir" (`BotonSeguimiento`), contador en la barra (`ContadorSeguimiento`) y página `/seguimiento`.
 - Comparación técnica **Context API vs Redux**: ver la sección [Comparación técnica Context API vs Redux](#comparación-técnica-context-api-vs-redux).
 
@@ -45,15 +45,13 @@ En esta etapa se trabaja con **datos locales y simulados**. No se consume ningun
 | `/solicitudes` | Lista de solicitudes |
 | `/seguimiento` | Solicitudes en seguimiento (Redux) |
 
-> Las demás rutas se agregan aquí a medida que se implementen: {pendiente}
-
 ### Actividades del documento y contenidos evaluados
 
 | # | Actividad | Contenido del sílabo | Dónde verlo |
 |---|---|---|---|
-| 1 | SPA con JSX, componentes y Hooks | Sesión 9: JSX, componentes funcionales y de clase, `useState` y `useEffect` | `src/pages/Solicitudes.jsx` · {pendiente} |
-| 2 | Navegación con React Router | Sesión 9: React Router | `src/App.jsx`, `src/components/Navbar.jsx` · {pendiente} |
-| 3 | Estado global con Context API | Sesión 10: Context API, providers y consumers | {pendiente} |
+| 1 | SPA con JSX, componentes y Hooks | Sesión 9: JSX, componentes funcionales y de clase, `useState` y `useEffect` | `src/pages/Solicitudes.jsx` (`useState`, `useEffect`) y `src/components/` |
+| 2 | Navegación con React Router | Sesión 9: React Router | `src/App.jsx`, `src/components/Navbar.jsx` |
+| 3 | Estado global con Context API | Sesión 10: Context API, providers y consumers | `src/context/SolicitudesContext.js`, `src/context/SolicitudesProvider.jsx`, `src/pages/Solicitudes.jsx` y `src/pages/Seguimiento.jsx` |
 | 4 | Introducción a Redux y comparación | Sesión 10: introducción básica a Redux | `src/store/`, `src/components/BotonSeguimiento.jsx`, `src/pages/Seguimiento.jsx` y la sección de comparación de este README |
 
 ### Decisiones técnicas de Redux
@@ -82,8 +80,6 @@ En esta etapa se trabaja con **datos locales y simulados**. No se consume ningun
 | Código necesario | Contexto y provider | Reducer, store, `Provider` de react-redux y una dependencia externa |
 | Cómo se lee | `useContext` | `useSelector` (y `useDispatch` para modificar) |
 
-> La columna de Context API describe el contrato acordado por el equipo. {pendiente}: confirmar que coincide con la implementación final del Context.
-
 **Conclusión técnica:** para los datos del caso, Context API fue suficiente: es simple y no requiere librerías. Redux dio un flujo explícito (acción, reducer, store) y más trazabilidad, pero para una necesidad tan pequeña exige más código. Redux se justificaría si el estado creciera y varios módulos lo modificaran.
 
 ### Herramientas
@@ -103,6 +99,8 @@ Requisitos: Node.js 20.19 o superior (o 22.12+), por la versión de Vite usada. 
 
 La aplicación queda disponible en la dirección que muestra la terminal (por defecto `http://localhost:5173`).
 
+**Estado del proyecto:** operativo. Compila sin errores (`npm run build`), pasa el lint (`npm run lint`) y se puede recorrer completo con `npm run dev`. Su funcionamiento también se muestra en el video de exposición (sección 5).
+
 **Pasos de revisión:**
 1. Abrir la dirección indicada y verificar la página de Inicio.
 2. Entrar a **Solicitudes**: se muestra "Cargando información..." unos 0,8 s y luego la tabla con las 6 solicitudes.
@@ -110,43 +108,32 @@ La aplicación queda disponible en la dirección que muestra la terminal (por de
 4. Ejecutar `npm run build` y `npm run lint`: ambos deben terminar sin errores.
 5. En **Solicitudes**, pulsar "Seguir" en una o dos solicitudes: el contador "Seguimiento (n)" de la barra sube y el botón cambia a "Dejar de seguir".
 6. Entrar a **Seguimiento** desde la barra: se listan las solicitudes seguidas; al pulsar "Dejar de seguir" salen de la lista y el contador baja. El estado se conserva al navegar entre vistas.
-7. Pasos de las demás actividades: {pendiente}
+7. En **Solicitudes**, cambiar el estado de una solicitud que se está siguiendo con el selector de la columna "Cambiar estado" y abrir **Seguimiento**: se muestra el estado nuevo, porque ambas vistas leen el mismo Context.
 
 > No publicar contraseñas, tokens, credenciales ni datos sensibles.
 
-## 4. Evidencias
-
-Las capturas estarán en la carpeta `evidencias/`. {pendiente}
-
-- Navegación entre vistas sin recargar la página (GIF o capturas).
-- Página de solicitudes con la tabla ya cargada y el estado "Cargando información..." previo.
-- `npm run build` y `npm run lint` sin errores.
-- Estado global con Context API actualizándose en más de una vista (antes y después): {pendiente}
-- Flujo de Redux (acción, cambio de estado y lectura en pantalla): {pendiente}
-- Comparación técnica Context API vs Redux: documentada en este README (sección *Comparación técnica*).
-
-## 5. Matriz de participación
+## 4. Matriz de participación
 
 | Integrante | Desarrollo | Pruebas | Documentación | Exposición | Evidencia de participación |
 |---|---|---|---|---|---|
-| Leonardo Alonso Guillén Zúñiga | Proyecto base, React Router, `Navbar`, página de solicitudes y datos de prueba | {pendiente} | {pendiente} | {pendiente} | Commits "react template", "creacion de componentes y estructura", "routing y solicitudes" y "datos de prueba y estilos" |
-| Mariano Guerrero Barrueto | Redux (reducer, store, `Provider`, `BotonSeguimiento`, `ContadorSeguimiento`) y página de Seguimiento | {pendiente} | Comparación Context API vs Redux | {pendiente} | Commit "Redux: reducer, store, seguimiento y comparacion" |
-| {pendiente: tercer integrante} | {pendiente} | {pendiente} | {pendiente} | {pendiente} | {pendiente} |
+| Leonardo Alonso Guillén Zúñiga | Proyecto base, React Router, `Navbar`, página de solicitudes y datos de prueba | Revisión manual del recorrido (sección 3), `npm run build` y `npm run lint` | Su actividad está documentada en este README | Explicación de las Actividades 1 y 2 en el video | Commits "react template", "creacion de componentes y estructura", "routing y solicitudes" y "datos de prueba y estilos" |
+| Flavio César García Flores | Context API: `SolicitudesContext` y `SolicitudesProvider` | Revisión manual del recorrido (sección 3), `npm run build` y `npm run lint` | Su actividad está documentada en este README | Explicación de la Actividad 3 en el video | Commits "Agregando SolicitudesContext.jsx para actividad 3" y "Add files via upload" (usuario cesargf123456) |
+| Mariano Guerrero Barrueto | Redux (reducer, store, `Provider`, `BotonSeguimiento`, `ContadorSeguimiento`) y página de Seguimiento | Revisión manual del recorrido (sección 3), `npm run build` y `npm run lint` | Comparación Context API vs Redux | Explicación de la Actividad 4 en el video | Commit "Redux: reducer, store, seguimiento y comparacion" |
 
 > Esta matriz se completa al cierre con lo que cada integrante realmente aportó, de acuerdo con el historial de commits.
 
-## 6. Video de exposición
+## 5. Video de exposición
 
 **Video público de YouTube:** [PEGAR AQUÍ EL ENLACE]
 
 Todos los integrantes deben participar en la exposición con sus cámaras prendidas y explicar el problema, el procedimiento, la solución desarrollada, las decisiones tomadas y su justificación, relacionándolas con los contenidos de las sesiones 9 y 10.
 
-## 7. Conclusiones
+## 6. Conclusiones
 
-- **Hooks:** `useState` guarda el estado de la pantalla y `useEffect` ejecuta una acción al cargar el componente y la limpia al salir. Usamos datos locales porque las APIs se ven en la sesión 11. *(Sesión 9)* {pendiente: sumar componentes de clase y formulario}
+- **Hooks:** `useState` guarda el estado de la pantalla y `useEffect` ejecuta una acción al cargar el componente y la limpia al salir. Usamos datos locales porque las APIs se ven en la sesión 11. *(Sesión 9)*
 - **React Router:** permite cambiar de vista sin recargar la página, como en una SPA. *(Sesión 9)*
 - **Redux:** una acción cambia el estado en un solo lugar (el store) y toda la pantalla se actualiza. Lo usamos para el seguimiento de solicitudes. *(Sesión 10)*
-- **Context API vs Redux:** Context es más simple; Redux da más orden y trazabilidad, pero pide más código. Para algo pequeño basta con Context. *(Sesión 10)* {pendiente: confirmar con el Context implementado}
+- **Context API vs Redux:** Context es más simple; Redux da más orden y trazabilidad, pero pide más código. Para algo pequeño basta con Context. *(Sesión 10)*
 
 ---
 
